@@ -96,7 +96,12 @@ def parse_row(row: list) -> dict | None:
         elif col == "tags":
             r["tags"] = [t.strip() for t in val.split(",") if t.strip()] if val else []
         elif col == "image_drive_url":
-            r["image_url"] = val
+            # Convert Drive share URL to thumbnail URL that renders in <img> tags
+            # uc?export=view URLs redirect through a virus-scan page and don't work as img src
+            file_id = None
+            if "id=" in val:
+                file_id = val.split("id=")[-1].split("&")[0]
+            r["image_url"] = f"https://drive.google.com/thumbnail?id={file_id}&sz=w800" if file_id else val
         else:
             r[col] = val
 

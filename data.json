@@ -1,0 +1,836 @@
+[
+  {
+    "id": "d52c3bfa-99a4-4911-83e6-a1a52bf524e8",
+    "slug": "tuna-pasta-bake",
+    "title": "Tuna pasta bake",
+    "category": "mains",
+    "cuisine_primary": "italian",
+    "difficulty": "easy",
+    "serves": 4,
+    "total_mins": 55,
+    "active_cook_time_mins": 20,
+    "gluten_free": false,
+    "dairy_free": false,
+    "vegetarian": false,
+    "vegan": false,
+    "nut_free": true,
+    "freezable": false,
+    "air_fryer": false,
+    "air_fryer_adaptable": false,
+    "hazelnut": false,
+    "brazil_nut": false,
+    "kcal": 502,
+    "protein_g": 36,
+    "ingredients": [
+      {
+        "quantity": 2,
+        "unit": "tsp",
+        "ingredient": "rapeseed oil",
+        "category": "condiments",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 1,
+        "unit": "large or 2 small",
+        "ingredient": "red peppers",
+        "category": "fresh_produce",
+        "notes": "deseeded and diced",
+        "group": null
+      },
+      {
+        "quantity": 3,
+        "unit": "cloves",
+        "ingredient": "garlic",
+        "category": "fresh_produce",
+        "notes": "2-3 large cloves, finely chopped",
+        "group": null
+      },
+      {
+        "quantity": 500,
+        "unit": "g",
+        "ingredient": "passata",
+        "category": "tins_jars",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 1,
+        "unit": "tsp",
+        "ingredient": "dried oregano",
+        "category": "spices_herbs",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 0.5,
+        "unit": "tsp",
+        "ingredient": "chilli flakes",
+        "category": "spices_herbs",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 1,
+        "unit": "large",
+        "ingredient": "aubergine",
+        "category": "fresh_produce",
+        "notes": "cut into small pieces",
+        "group": null
+      },
+      {
+        "quantity": 2,
+        "unit": "tbsp",
+        "ingredient": "capers",
+        "category": "tins_jars",
+        "notes": "not in salt",
+        "group": null
+      },
+      {
+        "quantity": 30,
+        "unit": "g",
+        "ingredient": "basil",
+        "category": "fresh_produce",
+        "notes": "chopped",
+        "group": null
+      },
+      {
+        "quantity": 220,
+        "unit": "g",
+        "ingredient": "canned tuna in spring water",
+        "category": "tins_jars",
+        "notes": "2 x 110g cans, drained",
+        "group": null
+      },
+      {
+        "quantity": 300,
+        "unit": "g",
+        "ingredient": "wholemeal penne",
+        "category": "dried_goods",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 250,
+        "unit": "g",
+        "ingredient": "quark",
+        "category": "dairy_eggs",
+        "notes": "tub",
+        "group": "For the topping"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "ingredient": "egg",
+        "category": "dairy_eggs",
+        "notes": null,
+        "group": "For the topping"
+      },
+      {
+        "quantity": 50,
+        "unit": "g",
+        "ingredient": "parmesan",
+        "category": "dairy_eggs",
+        "notes": "finely grated",
+        "group": "For the topping"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "tsp",
+        "ingredient": "dried oregano",
+        "category": "spices_herbs",
+        "notes": null,
+        "group": "For the topping"
+      }
+    ],
+    "method": [
+      "Heat the oven to 200C/180C fan/gas 6. Heat the oil in a large pan and fry the peppers over a medium heat for a few minutes to soften. Add the garlic and cook for a minute more, taking care not to burn it.",
+      "Pour in the passata, then stir in the oregano, chilli flakes, aubergine, capers and half the basil. Add the tuna, but don't stir too much as you don't want to break it up too much. Cover the pan and simmer over a low heat for 15 mins until the aubergine is tender, carefully stirring a couple of times.",
+      "Meanwhile, boil the pasta following pack instructions. Tip the quark into a bowl and beat in the egg and three-quarters of the parmesan.",
+      "Drain the pasta and tip into a deep 30 x 20cm oval ovenproof dish. Spoon over the cheesy mixture and lightly spread to completely coat the top. Sprinkle with most of the remaining parmesan and oregano, then bake for 15-20 mins to set the top. Scatter over the last of the basil and reserved parmesan, then serve with salad, if you like. Leftovers will keep chilled for three days. Reheat in the microwave until piping hot."
+    ],
+    "allergens": {
+      "contains": [
+        "gluten",
+        "dairy",
+        "eggs",
+        "fish"
+      ],
+      "may_contain": [],
+      "free_from": [
+        "nuts"
+      ]
+    },
+    "tags": [
+      "low-fat",
+      "high-protein",
+      "5-a-day",
+      "healthy",
+      "family-favourite",
+      "pasta-bake"
+    ],
+    "image_url": "https://drive.google.com/uc?export=view&id=1HZU35qW9g2l8og5BoCShQw-JnSBc2P7w",
+    "source_publication": "BBC Good Food",
+    "source_date": "2024-07",
+    "meal_plan_category": "dinner",
+    "serving_size_context": "couple",
+    "date_added": "2026-04-07",
+    "manually_reviewed": false,
+    "flagged_for_review": false,
+    "flag_reason": "",
+    "method_air_fryer": []
+  },
+  {
+    "id": "cc26ea1e-d136-4807-a04a-24bc8981f19a",
+    "slug": "tuna-rainbow-salad",
+    "title": "Tuna rainbow salad",
+    "category": "lunch",
+    "cuisine_primary": "british",
+    "difficulty": "easy",
+    "serves": 4,
+    "total_mins": 15,
+    "active_cook_time_mins": 0,
+    "gluten_free": true,
+    "dairy_free": true,
+    "vegetarian": false,
+    "vegan": false,
+    "nut_free": true,
+    "freezable": false,
+    "air_fryer": false,
+    "air_fryer_adaptable": false,
+    "hazelnut": false,
+    "brazil_nut": false,
+    "kcal": 357,
+    "protein_g": 14,
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": "whole",
+        "ingredient": "red pepper, sliced",
+        "category": "fresh_produce",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 1,
+        "unit": "large",
+        "ingredient": "carrot, grated",
+        "category": "fresh_produce",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 340,
+        "unit": "g",
+        "ingredient": "canned sweetcorn kernels, drained",
+        "category": "tins_jars",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 150,
+        "unit": "g",
+        "ingredient": "sugar snap peas",
+        "category": "fresh_produce",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 6,
+        "unit": "whole",
+        "ingredient": "cooked baby beetroot, quartered",
+        "category": "fresh_produce",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 185,
+        "unit": "g",
+        "ingredient": "canned flaked tuna in spring water, drained",
+        "category": "tins_jars",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 100,
+        "unit": "g",
+        "ingredient": "mayonnaise",
+        "category": "condiments",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 1,
+        "unit": "tbsp",
+        "ingredient": "lemon juice",
+        "category": "condiments",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 2,
+        "unit": "tsp",
+        "ingredient": "wholegrain mustard",
+        "category": "condiments",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 1,
+        "unit": "tsp",
+        "ingredient": "water",
+        "category": "other",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": null,
+        "unit": null,
+        "ingredient": "lettuce leaves",
+        "category": "fresh_produce",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 1,
+        "unit": "whole",
+        "ingredient": "spring onion, sliced",
+        "category": "fresh_produce",
+        "notes": null,
+        "group": null
+      }
+    ],
+    "method": [
+      "In a large bowl, mix together the red pepper, carrot, sweetcorn, sugar snap peas, beetroot and tuna.",
+      "In a small bowl, mix together mayonnaise, lemon juice, wholegrain mustard, 1 tsp water and seasoning to make a dressing.",
+      "Line a large bowl with lettuce leaves, fill with the salad and drizzle with dressing. Top with the spring onion and serve straightaway."
+    ],
+    "allergens": {
+      "contains": [
+        "fish",
+        "mustard",
+        "eggs"
+      ],
+      "may_contain": [],
+      "free_from": [
+        "gluten",
+        "dairy",
+        "nuts"
+      ]
+    },
+    "tags": [
+      "no-cook",
+      "salad",
+      "high-protein",
+      "5-a-day"
+    ],
+    "image_url": "https://drive.google.com/uc?export=view&id=13GgedNvWuPCkscOwdOuNzIyqaVuTSOyd",
+    "source_publication": "BBC Good Food",
+    "source_date": "2024-07",
+    "meal_plan_category": "lunch",
+    "serving_size_context": "couple",
+    "date_added": "2026-04-07",
+    "manually_reviewed": false,
+    "flagged_for_review": false,
+    "flag_reason": "",
+    "method_air_fryer": []
+  },
+  {
+    "id": "21be6f22-6e65-405f-bfbf-415ca63eea9d",
+    "slug": "thai-style-chicken-sweet-potato-parcels",
+    "title": "Thai-style chicken & sweet potato parcels",
+    "category": "mains",
+    "cuisine_primary": "thai",
+    "difficulty": "easy",
+    "serves": 1,
+    "total_mins": 40,
+    "active_cook_time_mins": 10,
+    "gluten_free": true,
+    "dairy_free": true,
+    "vegetarian": false,
+    "vegan": false,
+    "nut_free": true,
+    "freezable": false,
+    "air_fryer": false,
+    "air_fryer_adaptable": true,
+    "hazelnut": false,
+    "brazil_nut": false,
+    "kcal": 429,
+    "protein_g": 34,
+    "ingredients": [
+      {
+        "quantity": 25,
+        "unit": "g",
+        "ingredient": "creamed coconut (from a block)",
+        "category": "tins_jars",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 2,
+        "unit": "tsp",
+        "ingredient": "light brown soft sugar",
+        "category": "dried_goods",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 1,
+        "unit": "tsp",
+        "ingredient": "fish sauce",
+        "category": "condiments",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 2,
+        "unit": "tsp",
+        "ingredient": "Thai green curry paste",
+        "category": "condiments",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 0.5,
+        "unit": "whole",
+        "ingredient": "sweet potato, peeled and cut into small cubes",
+        "category": "fresh_produce",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 1,
+        "unit": "small",
+        "ingredient": "red pepper, deseeded and cut into small cubes",
+        "category": "fresh_produce",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 1,
+        "unit": "whole",
+        "ingredient": "skinless chicken breast",
+        "category": "meat_fish",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": null,
+        "unit": null,
+        "ingredient": "handful of coriander leaves",
+        "category": "fresh_produce",
+        "notes": "to serve",
+        "group": "To serve"
+      },
+      {
+        "quantity": 1,
+        "unit": "whole",
+        "ingredient": "lime, cut into wedges",
+        "category": "fresh_produce",
+        "notes": "to serve",
+        "group": "To serve"
+      }
+    ],
+    "method": [
+      "Heat the oven to 200C/180C fan/gas 6. Dissolve the creamed coconut with 3 tbsp boiling water and mix to a smooth paste. Stir in the sugar, fish sauce and curry paste.",
+      "Lay a large piece of baking parchment on a baking sheet. Arrange the sweet potato and pepper in the middle of the parchment, clearing a space in the centre. Lay the chicken in the space and pour over the curry sauce. Fold over the top edges of the parchment to form a seal and scrunch up the ends like a sweet wrapper.",
+      "Cook in the oven for 25-30 mins or until the chicken is cooked through and the vegetables are tender. Sit the parcel on a dinner plate or shallow bowl and carefully open. Sprinkle with the coriander and serve with lime wedges on the side for squeezing over."
+    ],
+    "allergens": {
+      "contains": [
+        "fish"
+      ],
+      "may_contain": [],
+      "free_from": [
+        "gluten",
+        "dairy",
+        "nuts"
+      ]
+    },
+    "tags": [
+      "one-pan",
+      "low-GI",
+      "gluten-free",
+      "dairy-free",
+      "5-a-day",
+      "parcel"
+    ],
+    "image_url": "https://drive.google.com/uc?export=view&id=1j0pqZriXHvj2o5i8fTh7yc152bw-lelM",
+    "source_publication": "BBC Good Food",
+    "source_date": "2024-07",
+    "meal_plan_category": "dinner",
+    "serving_size_context": "solo",
+    "date_added": "2026-04-07",
+    "manually_reviewed": false,
+    "flagged_for_review": false,
+    "flag_reason": "",
+    "method_air_fryer": [
+      "Dissolve the creamed coconut with 3 tbsp boiling water and mix to a smooth paste. Stir in the sugar, fish sauce and curry paste.",
+      "Lay a large piece of baking parchment and arrange the sweet potato and pepper in the middle, clearing a space in the centre. Lay the chicken in the space and pour over the curry sauce. Fold and scrunch the parchment to form a sealed parcel.",
+      "Place the parcel in the air fryer basket and cook at 180C for 20-25 mins or until the chicken is cooked through and the vegetables are tender. Carefully open the parcel, sprinkle with coriander and serve with lime wedges."
+    ]
+  },
+  {
+    "id": "a38672e7-b733-49cd-95a1-448eacc4edf1",
+    "slug": "burrito-bowl-with-chipotle-black-beans",
+    "title": "Burrito bowl with chipotle black beans",
+    "category": "mains",
+    "cuisine_primary": "mexican",
+    "difficulty": "easy",
+    "serves": 2,
+    "total_mins": 30,
+    "active_cook_time_mins": 15,
+    "gluten_free": true,
+    "dairy_free": true,
+    "vegetarian": true,
+    "vegan": false,
+    "nut_free": true,
+    "freezable": false,
+    "air_fryer": false,
+    "air_fryer_adaptable": false,
+    "hazelnut": false,
+    "brazil_nut": false,
+    "kcal": 573,
+    "protein_g": 16,
+    "ingredients": [
+      {
+        "quantity": 125,
+        "unit": "g",
+        "ingredient": "basmati rice",
+        "category": "dried_goods",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 1,
+        "unit": "tbsp",
+        "ingredient": "olive oil",
+        "category": "condiments",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "ingredient": "garlic cloves",
+        "category": "fresh_produce",
+        "notes": "chopped",
+        "group": null
+      },
+      {
+        "quantity": 400,
+        "unit": "g",
+        "ingredient": "can black beans",
+        "category": "tins_jars",
+        "notes": "drained and rinsed",
+        "group": null
+      },
+      {
+        "quantity": 1,
+        "unit": "tbsp",
+        "ingredient": "cider vinegar",
+        "category": "condiments",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 1,
+        "unit": "tsp",
+        "ingredient": "honey",
+        "category": "condiments",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 1,
+        "unit": "tbsp",
+        "ingredient": "chipotle paste",
+        "category": "condiments",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 100,
+        "unit": "g",
+        "ingredient": "curly kale",
+        "category": "fresh_produce",
+        "notes": "chopped",
+        "group": null
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "ingredient": "avocado",
+        "category": "fresh_produce",
+        "notes": "halved and sliced",
+        "group": null
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "ingredient": "medium tomato",
+        "category": "fresh_produce",
+        "notes": "chopped",
+        "group": null
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "ingredient": "small red onion",
+        "category": "fresh_produce",
+        "notes": "chopped",
+        "group": null
+      },
+      {
+        "quantity": null,
+        "unit": null,
+        "ingredient": "chipotle hot sauce",
+        "category": "condiments",
+        "notes": "optional, to serve",
+        "group": null
+      },
+      {
+        "quantity": null,
+        "unit": null,
+        "ingredient": "coriander leaves",
+        "category": "spices_herbs",
+        "notes": "optional, to serve",
+        "group": null
+      },
+      {
+        "quantity": null,
+        "unit": null,
+        "ingredient": "lime wedges",
+        "category": "fresh_produce",
+        "notes": "optional, to serve",
+        "group": null
+      }
+    ],
+    "method": [
+      "Cook the rice following pack instructions, then drain and return to the pan to keep warm. In a frying pan, heat the oil, add the garlic and fry for 2 mins or until golden. Add the beans, vinegar, honey and chipotle paste. Season and warm through for 2 mins.",
+      "Boil the kale for 1 min, then drain, squeezing out any excess water. Divide the rice between big shallow bowls and top with the beans, kale, avocado, tomato and onion. Serve with the hot sauce and coriander sprinkled on top and the lime wedges on the side to squeeze over."
+    ],
+    "allergens": {
+      "contains": [],
+      "may_contain": [],
+      "free_from": [
+        "gluten",
+        "dairy",
+        "nuts"
+      ]
+    },
+    "tags": [
+      "dairy-free",
+      "gluten-free",
+      "high-protein",
+      "5-a-day",
+      "vegetarian",
+      "vegan-adaptable"
+    ],
+    "image_url": "https://drive.google.com/uc?export=view&id=1bV_krPZ1ZYfLecYQYZDrj1-1qURW-m6h",
+    "source_publication": "BBC Good Food",
+    "source_date": "2024-07",
+    "meal_plan_category": "dinner",
+    "serving_size_context": "solo",
+    "date_added": "2026-04-07",
+    "manually_reviewed": false,
+    "flagged_for_review": false,
+    "flag_reason": "",
+    "method_air_fryer": []
+  },
+  {
+    "id": "76ec478e-a344-4965-825e-24978da344cf",
+    "slug": "one-pan-coconut-dhal",
+    "title": "One-pan coconut dhal",
+    "category": "mains",
+    "cuisine_primary": "indian",
+    "difficulty": "easy",
+    "serves": 4,
+    "total_mins": 55,
+    "active_cook_time_mins": 15,
+    "gluten_free": true,
+    "dairy_free": true,
+    "vegetarian": true,
+    "vegan": true,
+    "nut_free": false,
+    "freezable": true,
+    "air_fryer": false,
+    "air_fryer_adaptable": false,
+    "hazelnut": false,
+    "brazil_nut": false,
+    "kcal": 393,
+    "protein_g": 14,
+    "ingredients": [
+      {
+        "quantity": 300,
+        "unit": "g",
+        "ingredient": "red lentils",
+        "category": "dried_goods",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 2,
+        "unit": "tbsp",
+        "ingredient": "sunflower oil",
+        "category": "condiments",
+        "notes": "plus extra for drizzling",
+        "group": null
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "ingredient": "onions",
+        "category": "fresh_produce",
+        "notes": "finely sliced",
+        "group": null
+      },
+      {
+        "quantity": 4,
+        "unit": null,
+        "ingredient": "garlic cloves",
+        "category": "fresh_produce",
+        "notes": "crushed or finely chopped",
+        "group": null
+      },
+      {
+        "quantity": 1,
+        "unit": "thumb-sized piece",
+        "ingredient": "fresh ginger",
+        "category": "fresh_produce",
+        "notes": "finely chopped",
+        "group": null
+      },
+      {
+        "quantity": 5,
+        "unit": null,
+        "ingredient": "curry leaves",
+        "category": "fresh_produce",
+        "notes": "optional",
+        "group": null
+      },
+      {
+        "quantity": 1,
+        "unit": "tsp",
+        "ingredient": "mustard seeds",
+        "category": "spices_herbs",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 1,
+        "unit": "tsp",
+        "ingredient": "cumin seeds",
+        "category": "spices_herbs",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 1,
+        "unit": "tsp",
+        "ingredient": "ground coriander",
+        "category": "spices_herbs",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 1,
+        "unit": "tsp",
+        "ingredient": "ground turmeric",
+        "category": "spices_herbs",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "ingredient": "dried red chilli",
+        "category": "spices_herbs",
+        "notes": "whole",
+        "group": null
+      },
+      {
+        "quantity": 1,
+        "unit": "tbsp",
+        "ingredient": "tomato purée",
+        "category": "condiments",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": 400,
+        "unit": "g",
+        "ingredient": "coconut milk",
+        "category": "tins_jars",
+        "notes": "1 can",
+        "group": null
+      },
+      {
+        "quantity": 850,
+        "unit": "ml",
+        "ingredient": "water",
+        "category": "other",
+        "notes": null,
+        "group": null
+      },
+      {
+        "quantity": null,
+        "unit": null,
+        "ingredient": "coriander leaves",
+        "category": "fresh_produce",
+        "notes": "to serve",
+        "group": null
+      },
+      {
+        "quantity": null,
+        "unit": null,
+        "ingredient": "fresh ginger",
+        "category": "fresh_produce",
+        "notes": "sliced, to serve",
+        "group": null
+      },
+      {
+        "quantity": null,
+        "unit": null,
+        "ingredient": "green chilli",
+        "category": "fresh_produce",
+        "notes": "sliced, to serve",
+        "group": null
+      }
+    ],
+    "method": [
+      "Rinse the lentils until the water runs clear, then drain. Heat the oil in a large, shallow pan and cook the onions over a low heat for 10 mins until starting to brown, adding more oil if the pan looks dry.",
+      "Add the garlic and ginger, and cook for another 30 seconds. Scatter in the curry leaves, if using, and all the spices along with the whole chilli and cook for a few minutes more. Stir in the tomato purée and cook for 1 min.",
+      "Stir in the lentils, ensuring they're well coated in the spices, then pour over the coconut milk and 850ml water. Bring to the boil, stirring occasionally, then simmer for about 30 mins until the lentils are soft and soupy. Scoop out the chilli and discard, then season with salt. Will keep frozen for two months. Leave to cool first. Defrost completely before reheating in a pan over a low heat, adding a little water to loosen.",
+      "Serve with a sprinkling of the coriander, sliced ginger and chilli, and drizzle with a little more oil."
+    ],
+    "allergens": {
+      "contains": [],
+      "may_contain": [],
+      "free_from": [
+        "gluten",
+        "dairy"
+      ]
+    },
+    "tags": [
+      "one-pan",
+      "freezable",
+      "vegan",
+      "gluten-free",
+      "dairy-free",
+      "2-of-5-a-day",
+      "high-fibre",
+      "iron-rich"
+    ],
+    "image_url": "https://drive.google.com/uc?export=view&id=1DnSnPoieckWTGBoj23zBhKzMGBQ-kROK",
+    "source_publication": "BBC Good Food",
+    "source_date": "2024-07",
+    "meal_plan_category": "dinner",
+    "serving_size_context": "couple",
+    "date_added": "2026-04-07",
+    "manually_reviewed": false,
+    "flagged_for_review": false,
+    "flag_reason": "",
+    "method_air_fryer": []
+  }
+]

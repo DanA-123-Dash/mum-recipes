@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Recipes">
+<title>Mum's Recipes</title>
+<link rel="manifest" href="manifest.json">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf6f0;
+    --warm-white: #fffdf9;
+    --ink: #2c2416;
+    --ink-light: #6b5d4f;
+    --rust: #c4622d;
+    --rust-light: #e8845a;
+    --sage: #7a9e7e;
+    --amber: #d4860a;
+    --card-shadow: 0 2px 12px rgba(44,36,22,0.10);
+    --card-shadow-hover: 0 8px 32px rgba(44,36,22,0.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--cream);
+    font-family: 'Lato', sans-serif;
+    color: var(--ink);
+    min-height: 100vh;
+    padding-bottom: env(safe-area-inset-bottom, 40px);
+    padding-bottom: 40px;
+  }
+
+  /* ── PROFILE PICKER ──────────────────────────────────────────────── */
+  .profile-screen {
+    position: fixed;
+    inset: 0;
+    background: var(--ink);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    gap: 32px;
+  }
+
+  .profile-screen.hidden { display: none; }
+
+  .profile-screen h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    color: var(--cream);
+    text-align: center;
+  }
+
+  .profile-screen p {
+    font-size: 15px;
+    color: rgba(250,246,240,0.6);
+    text-align: center;
+    margin-top: -20px;
+  }
+
+  .profile-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .profile-card {
+    background: rgba(255,255,255,0.07);
+    border: 1.5px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 20px 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .profile-card:active { transform: scale(0.97); }
+  .profile-card:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.25); }
+
+  .profile-emoji { font-size: 32px; }
+
+  .profile-card-text strong {
+    display: block;
+    font-size: 17px;
+    color: var(--cream);
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .profile-card-text span {
+    font-size: 13px;
+    color: rgba(250,246,240,0.5);
+    font-weight: 300;
+  }
+
+  /* ── HEADER ──────────────────────────────────────────────────────── */
+  header {
+    background: var(--ink);
+    padding: 20px 20px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .header-left { display: flex; align-items: baseline; gap: 10px; }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: var(--cream);
+    letter-spacing: -0.5px;
+  }
+
+  header .count {
+    font-size: 13px;
+    color: var(--rust-light);
+    font-weight: 300;
+    letter-spacing: 0.5px;
+  }
+
+  .profile-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 6px 12px 6px 8px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.2s;
+  }
+
+  .profile-pill:active { background: rgba(255,255,255,0.15); }
+  .profile-pill .pill-emoji { font-size: 16px; }
+  .profile-pill .pill-name { font-size: 13px; color: var(--cream); font-weight: 700; }
+
+  .search-bar {
+    display: flex;
+    align-items: center;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 10px 16px;
+    gap: 10px;
+  }
+
+  .search-bar input {
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--cream);
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    width: 100%;
+  }
+
+  .search-bar input::placeholder { color: rgba(250,246,240,0.35); }
+  .search-icon { color: rgba(250,246,240,0.45); font-size: 16px; }
+
+  /* ── FILTERS ─────────────────────────────────────────────────────── */
+  .filters {
+    padding: 14px 16px 6px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .filters::-webkit-scrollbar { display: none; }
+
+  .filter-btn {
+    white-space: nowrap;
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1.5px solid rgba(44,36,22,0.18);
+    background: transparent;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    color: var(--ink-light);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 400;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .filter-btn.active {
+    background: var(--rust);
+    border-color: var(--rust);
+    color: white;
+    font-weight: 700;
+  }
+
+  .filter-btn:hover:not(.active) { border-color: var(--rust); color: var(--rust); }
+
+  /* ── SURPRISE ME ─────────────────────────────────────────────────── */
+  .surprise-banner {
+    margin: 10px 16px 4px;
+    background: linear-gradient(135deg, var(--sage) 0%, #5a8060 100%);
+    border-radius: 14px;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 16px rgba(90,128,96,0.3);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .surprise-banner:active { transform: scale(0.98); }
+  .surprise-text { color: white; }
+  .surprise-text strong { font-size: 16px; display: block; font-weight: 700; }
+  .surprise-text span { font-size: 13px; opacity: 0.85; font-weight: 300; }
+  .surprise-dice { font-size: 30px; }
+
+  /* ── SECTION LABEL ───────────────────────────────────────────────── */
+  .section-label {
+    padding: 14px 16px 8px;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    font-weight: 700;
+  }
+
+  /* ── RECIPE GRID ─────────────────────────────────────────────────── */
+  .recipe-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 0 14px;
+  }
+
+  .recipe-card {
+    background: var(--warm-white);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+  }
+
+  .recipe-card:active { transform: scale(0.97); }
+
+  /* Allergen warning state */
+  .recipe-card.allergen-flagged .card-img,
+  .recipe-card.allergen-flagged .card-img-placeholder {
+    filter: grayscale(1);
+    opacity: 0.45;
+  }
+
+  .allergen-badge {
+    display: none;
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: var(--amber);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 8px;
+    z-index: 2;
+    letter-spacing: 0.3px;
+  }
+
+  .recipe-card.allergen-flagged .allergen-badge { display: block; }
+
+  .card-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+    background: #e8ddd0;
+  }
+
+  .card-img-placeholder {
+    width: 100%;
+    aspect-ratio: 4/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 38px;
+    background: linear-gradient(135deg, #f0e8dc, #e8ddd0);
+  }
+
+  .card-body { padding: 10px 12px 12px; }
+
+  .card-category {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--rust);
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    line-height: 1.3;
+    color: var(--ink);
+  }
+
+  .card-meta {
+    margin-top: 7px;
+    font-size: 11px;
+    color: var(--ink-light);
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  /* ── LOADING STATE ───────────────────────────────────────────────── */
+  .loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    gap: 16px;
+    color: var(--ink-light);
+  }
+
+  .spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid rgba(44,36,22,0.12);
+    border-top-color: var(--rust);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── RECIPE MODAL ────────────────────────────────────────────────── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(44,36,22,0.55);
+    z-index: 200;
+    display: flex;
+    align-items: flex-end;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+  .modal-wrapper { position: relative; width: 100%; }
+
+  .modal {
+    background: var(--warm-white);
+    border-radius: 24px 24px 0 0;
+    width: 100%;
+    max-height: 92vh;
+    overflow-y: auto;
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.32,0.72,0,1);
+  }
+
+  .modal-overlay.open .modal { transform: translateY(0); }
+
+  .modal-hero {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .modal-hero-placeholder {
+    width: 100%;
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 70px;
+    background: linear-gradient(135deg, #f0e8dc, #e8ddd0);
+  }
+
+  .modal-handle {
+    width: 40px;
+    height: 4px;
+    background: rgba(44,36,22,0.15);
+    border-radius: 2px;
+    margin: 12px auto 0;
+  }
+
+  .modal-content { padding: 16px 22px 48px; }
+
+  .modal-category {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--rust);
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+
+  .modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+
+  .modal-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--ink-light);
+    margin-bottom: 10px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(44,36,22,0.08);
+  }
+
+  .dietary-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+
+  .badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 10px;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+
+  .badge-green { background: #e8f4ea; color: #3a7a3f; }
+  .badge-blue  { background: #e8eef8; color: #3a5a8a; }
+  .badge-amber { background: #fef3e0; color: #a06000; }
+
+  .modal-section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    color: var(--ink);
+  }
+
+  .ingredient-group-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--rust);
+    margin: 14px 0 6px;
+  }
+
+  .ingredients-list { list-style: none; margin-bottom: 4px; }
+
+  .ingredients-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(44,36,22,0.06);
+    font-size: 15px;
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    line-height: 1.4;
+  }
+
+  .ingredients-list li::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    min-width: 5px;
+    border-radius: 50%;
+    background: var(--rust);
+    margin-top: 7px;
+  }
+
+  .method-steps { margin-bottom: 20px; }
+
+  .method-step {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 14px;
+    align-items: flex-start;
+  }
+
+  .step-number {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    margin-top: 1px;
+  }
+
+  .step-text { font-size: 15px; line-height: 1.6; color: var(--ink); }
+
+  .nutrition-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .nutrition-cell {
+    background: rgba(44,36,22,0.04);
+    border-radius: 10px;
+    padding: 10px 8px;
+    text-align: center;
+  }
+
+  .nutrition-cell .nut-val { font-size: 16px; font-weight: 700; color: var(--ink); display: block; }
+  .nutrition-cell .nut-lbl { font-size: 10px; color: var(--ink-light); text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .source-line {
+    font-size: 12px;
+    color: var(--ink-light);
+    font-style: italic;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(44,36,22,0.08);
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(44,36,22,0.45);
+    border: none;
+    color: white;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* ── ALLERGEN INTERSTITIAL ───────────────────────────────────────── */
+  .allergen-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(44,36,22,0.7);
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+
+  .allergen-overlay.open { opacity: 1; pointer-events: all; }
+
+  .allergen-card {
+    background: var(--warm-white);
+    border-radius: 20px;
+    padding: 28px 24px;
+    max-width: 340px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .allergen-card .warn-icon { font-size: 48px; margin-bottom: 12px; }
+
+  .allergen-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+
+  .allergen-card p {
+    font-size: 14px;
+    color: var(--ink-light);
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  .allergen-card p strong { color: var(--amber); }
+
+  .allergen-btns { display: flex; gap: 10px; }
+
+  .allergen-btns button {
+    flex: 1;
+    padding: 13px;
+    border-radius: 12px;
+    border: none;
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btn-cancel { background: rgba(44,36,22,0.08); color: var(--ink); }
+  .btn-view   { background: var(--rust); color: white; }
+</style>
+</head>
+<body>
+
+<!-- ── PROFILE PICKER ──────────────────────────────────────────────────── -->
+<div class="profile-screen" id="profileScreen">
+  <h1>Mum's Recipes</h1>
+  <p>Who's cooking today?</p>
+  <div class="profile-cards">
+    <div class="profile-card" onclick="selectProfile('mum')">
+      <span class="profile-emoji">👩‍🍳</span>
+      <div class="profile-card-text">
+        <strong>Mum</strong>
+        <span>All recipes</span>
+      </div>
+    </div>
+    <div class="profile-card" onclick="selectProfile('dan')">
+      <span class="profile-emoji">👨‍💻</span>
+      <div class="profile-card-text">
+        <strong>Dan</strong>
+        <span>All recipes</span>
+      </div>
+    </div>
+    <div class="profile-card" onclick="selectProfile('cat')">
+      <span class="profile-emoji">🐱</span>
+      <div class="profile-card-text">
+        <strong>Cat</strong>
+        <span>Nut warnings shown</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── HEADER ──────────────────────────────────────────────────────────── -->
+<header>
+  <div class="header-top">
+    <div class="header-left">
+      <h1>Mum's Recipes</h1>
+      <span class="count" id="recipeCount"></span>
+    </div>
+    <div class="profile-pill" id="profilePill" onclick="showProfileScreen()">
+      <span class="pill-emoji" id="pillEmoji"></span>
+      <span class="pill-name" id="pillName"></span>
+    </div>
+  </div>
+  <div class="search-bar">
+    <span class="search-icon">🔍</span>
+    <input type="text" placeholder="Search by name or ingredient…" id="searchInput" oninput="renderGrid()">
+  </div>
+</header>
+
+<!-- ── FILTERS ─────────────────────────────────────────────────────────── -->
+<div class="filters" id="filters"></div>
+
+<!-- ── SURPRISE ME ─────────────────────────────────────────────────────── -->
+<div class="surprise-banner" onclick="surpriseMe()">
+  <div class="surprise-text">
+    <strong>Surprise Me</strong>
+    <span>Pick a random recipe for tonight</span>
+  </div>
+  <div class="surprise-dice">🎲</div>
+</div>
+
+<div class="section-label" id="sectionLabel"></div>
+<div class="recipe-grid" id="recipeGrid"></div>
+
+<!-- ── RECIPE MODAL ─────────────────────────────────────────────────────── -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOnBg(event)">
+  <div class="modal-wrapper">
+    <button class="close-btn" onclick="closeModal()">✕</button>
+    <div class="modal" id="modal">
+      <div id="modalHero"></div>
+      <div class="modal-handle"></div>
+      <div class="modal-content">
+        <div class="modal-category" id="modalCategory"></div>
+        <div class="modal-title" id="modalTitle"></div>
+        <div class="modal-meta" id="modalMeta"></div>
+        <div class="dietary-badges" id="modalBadges"></div>
+        <div id="modalIngredientSection"></div>
+        <div class="modal-section-title">Method</div>
+        <div class="method-steps" id="modalMethod"></div>
+        <div id="modalNutrition"></div>
+        <div id="modalSource"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ALLERGEN INTERSTITIAL ────────────────────────────────────────────── -->
+<div class="allergen-overlay" id="allergenOverlay">
+  <div class="allergen-card">
+    <div class="warn-icon">⚠️</div>
+    <h3 id="allergenTitle"></h3>
+    <p id="allergenMsg"></p>
+    <div class="allergen-btns">
+      <button class="btn-cancel" onclick="closeAllergenModal()">Cancel</button>
+      <button class="btn-view" onclick="openAfterWarning()">View Recipe →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── State ───────────────────────────────────────────────────────────────────
+let allRecipes = [];
+let activeFilter = 'All';
+let pendingRecipeId = null;
+let wakeLock = null;
+
+const PROFILES = {
+  mum: { emoji: '👩‍🍳', name: 'Mum' },
+  dan: { emoji: '👨‍💻', name: 'Dan' },
+  cat: { emoji: '🐱',  name: 'Cat' },
+};
+
+const CATEGORY_EMOJI = {
+  mains: '🍗', bakes: '🍰', soups: '🥣', sides: '🥗',
+  desserts: '🍮', breakfast: '🍳', lunch: '🥪', snacks: '🍎',
+};
+
+// ── Fractions formatter ─────────────────────────────────────────────────────
+const FRACTIONS = { 0.25:'¼', 0.33:'⅓', 0.5:'½', 0.67:'⅔', 0.75:'¾' };
+function fmtQty(qty) {
+  if (qty == null) return '';
+  const whole = Math.floor(qty);
+  const frac = Math.round((qty - whole) * 100) / 100;
+  const fracStr = FRACTIONS[frac] || (frac > 0 ? frac.toString() : '');
+  return whole > 0 ? (fracStr ? `${whole} ${fracStr}` : `${whole}`) : (fracStr || qty.toString());
+}
+
+function fmtIngredient(ing) {
+  const qty  = fmtQty(ing.quantity);
+  const unit = ing.unit || '';
+  const name = ing.ingredient || '';
+  const note = ing.notes ? ` <em style="color:var(--ink-light);font-style:normal">(${ing.notes})</em>` : '';
+  return [qty, unit, name].filter(Boolean).join(' ') + note;
+}
+
+// ── Profile ─────────────────────────────────────────────────────────────────
+function getProfile() { return localStorage.getItem('activeProfile') || null; }
+
+function selectProfile(id) {
+  localStorage.setItem('activeProfile', id);
+  document.getElementById('profileScreen').classList.add('hidden');
+  updateProfilePill();
+  renderGrid();
+}
+
+function showProfileScreen() {
+  document.getElementById('profileScreen').classList.remove('hidden');
+}
+
+function updateProfilePill() {
+  const id = getProfile();
+  if (!id) return;
+  const p = PROFILES[id];
+  document.getElementById('pillEmoji').textContent = p.emoji;
+  document.getElementById('pillName').textContent  = p.name;
+}
+
+function isAllergenFlagged(recipe) {
+  return getProfile() === 'cat' && (recipe.hazelnut || recipe.brazil_nut);
+}
+
+// ── Data loading ─────────────────────────────────────────────────────────────
+async function init() {
+  // Show or skip profile screen
+  if (getProfile()) {
+    document.getElementById('profileScreen').classList.add('hidden');
+    updateProfilePill();
+  }
+
+  document.getElementById('recipeGrid').innerHTML =
+    '<div class="loading" style="grid-column:1/-1"><div class="spinner"></div><span>Loading recipes…</span></div>';
+
+  try {
+    const res = await fetch('data.json');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    allRecipes = await res.json();
+  } catch (e) {
+    document.getElementById('recipeGrid').innerHTML =
+      `<div class="loading" style="grid-column:1/-1">⚠️ Could not load recipes.<br><small>${e.message}</small></div>`;
+    return;
+  }
+
+  buildFilters();
+  renderGrid();
+}
+
+// ── Filters ──────────────────────────────────────────────────────────────────
+function buildFilters() {
+  const cats = ['All', ...new Set(allRecipes.map(r => r.category).filter(Boolean).map(c => c.charAt(0).toUpperCase() + c.slice(1)))];
+  const el = document.getElementById('filters');
+  el.innerHTML = cats.map((c, i) =>
+    `<button class="filter-btn${i===0?' active':''}" onclick="setFilter('${c}',this)">${CATEGORY_EMOJI[c.toLowerCase()]||''} ${c}</button>`
+  ).join('');
+}
+
+function setFilter(cat, btn) {
+  activeFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderGrid();
+}
+
+// ── Render grid ───────────────────────────────────────────────────────────────
+function renderGrid() {
+  const q = (document.getElementById('searchInput').value || '').toLowerCase();
+  let data = allRecipes;
+
+  if (activeFilter !== 'All') {
+    data = data.filter(r => r.category?.toLowerCase() === activeFilter.toLowerCase());
+  }
+
+  if (q) {
+    data = data.filter(r =>
+      r.title?.toLowerCase().includes(q) ||
+      (r.ingredients || []).some(i => i.ingredient?.toLowerCase().includes(q))
+    );
+  }
+
+  const label = activeFilter === 'All' ? `All Recipes (${data.length})` : `${activeFilter} (${data.length})`;
+  document.getElementById('sectionLabel').textContent = label;
+  document.getElementById('recipeCount').textContent = `${allRecipes.length} recipes`;
+
+  const grid = document.getElementById('recipeGrid');
+  if (!data.length) {
+    grid.innerHTML = '<div class="loading" style="grid-column:1/-1">No recipes found.</div>';
+    return;
+  }
+
+  grid.innerHTML = data.map(r => {
+    const flagged = isAllergenFlagged(r);
+    const img = r.image_url
+      ? `<img class="card-img" src="${r.image_url}" alt="${r.title}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+        + `<div class="card-img-placeholder" style="display:none">${CATEGORY_EMOJI[r.category] || '🍽'}</div>`
+      : `<div class="card-img-placeholder">${CATEGORY_EMOJI[r.category] || '🍽'}</div>`;
+
+    return `
+      <div class="recipe-card${flagged ? ' allergen-flagged' : ''}" onclick="handleCardClick('${r.id}')">
+        <div class="allergen-badge">⚠ Nuts</div>
+        ${img}
+        <div class="card-body">
+          <div class="card-category">${r.category || ''}</div>
+          <div class="card-title">${r.title}</div>
+          <div class="card-meta">
+            ${r.total_mins ? `<span>⏱ ${r.total_mins} mins</span>` : ''}
+            ${r.serves ? `<span>👥 ${r.serves}</span>` : ''}
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ── Card click ────────────────────────────────────────────────────────────────
+function handleCardClick(id) {
+  const r = allRecipes.find(x => x.id === id);
+  if (!r) return;
+  if (isAllergenFlagged(r)) {
+    showAllergenWarning(r);
+  } else {
+    openRecipe(r);
+  }
+}
+
+// ── Allergen interstitial ──────────────────────────────────────────────────────
+function showAllergenWarning(r) {
+  pendingRecipeId = r.id;
+  const nuts = [];
+  if (r.hazelnut)   nuts.push('hazelnuts');
+  if (r.brazil_nut) nuts.push('brazil nuts');
+  document.getElementById('allergenTitle').textContent = r.title;
+  document.getElementById('allergenMsg').innerHTML =
+    `This recipe contains <strong>${nuts.join(' and ')}</strong>. Cat has an allergy to these.`;
+  document.getElementById('allergenOverlay').classList.add('open');
+}
+
+function closeAllergenModal() {
+  document.getElementById('allergenOverlay').classList.remove('open');
+  pendingRecipeId = null;
+}
+
+function openAfterWarning() {
+  const r = allRecipes.find(x => x.id === pendingRecipeId);
+  document.getElementById('allergenOverlay').classList.remove('open');
+  pendingRecipeId = null;
+  if (r) openRecipe(r);
+}
+
+// ── Recipe modal ───────────────────────────────────────────────────────────────
+function openRecipe(r) {
+  // Hero image
+  const hero = document.getElementById('modalHero');
+  if (r.image_url) {
+    hero.innerHTML = `<img class="modal-hero" src="${r.image_url}" alt="${r.title}" onerror="this.parentElement.innerHTML='<div class=modal-hero-placeholder>${CATEGORY_EMOJI[r.category]||'🍽'}</div>'">`;
+  } else {
+    hero.innerHTML = `<div class="modal-hero-placeholder">${CATEGORY_EMOJI[r.category] || '🍽'}</div>`;
+  }
+
+  document.getElementById('modalCategory').textContent = `${r.category || ''} ${r.cuisine_primary ? '· ' + r.cuisine_primary : ''}`.trim();
+  document.getElementById('modalTitle').textContent = r.title;
+
+  // Meta row
+  const meta = [];
+  if (r.total_mins)  meta.push(`⏱ ${r.total_mins} mins`);
+  if (r.serves)      meta.push(`👥 Serves ${r.serves}`);
+  if (r.difficulty)  meta.push(`${r.difficulty}`);
+  if (r.kcal)        meta.push(`🔥 ${r.kcal} kcal`);
+  document.getElementById('modalMeta').innerHTML = meta.map(m => `<span>${m}</span>`).join('');
+
+  // Dietary badges
+  const badges = [];
+  if (r.vegetarian) badges.push(['V', 'green']);
+  if (r.vegan)      badges.push(['VG', 'green']);
+  if (r.gluten_free) badges.push(['GF', 'blue']);
+  if (r.dairy_free)  badges.push(['DF', 'blue']);
+  if (r.freezable)   badges.push(['Freezable', 'amber']);
+  document.getElementById('modalBadges').innerHTML =
+    badges.map(([t,c]) => `<span class="badge badge-${c}">${t}</span>`).join('');
+
+  // Ingredients (with group headers)
+  const ings = r.ingredients || [];
+  let ingHtml = '<div class="modal-section-title">Ingredients</div>';
+  let currentGroup = null;
+  const listItems = [];
+
+  for (const ing of ings) {
+    if (ing.group && ing.group !== currentGroup) {
+      if (listItems.length) {
+        ingHtml += `<ul class="ingredients-list">${listItems.join('')}</ul>`;
+        listItems.length = 0;
+      }
+      ingHtml += `<div class="ingredient-group-label">${ing.group}</div>`;
+      currentGroup = ing.group;
+    }
+    listItems.push(`<li>${fmtIngredient(ing)}</li>`);
+  }
+  if (listItems.length) ingHtml += `<ul class="ingredients-list">${listItems.join('')}</ul>`;
+  document.getElementById('modalIngredientSection').innerHTML = ingHtml;
+
+  // Method steps
+  const method = r.method || [];
+  document.getElementById('modalMethod').innerHTML = method.map((s, i) => `
+    <div class="method-step">
+      <div class="step-number">${i + 1}</div>
+      <div class="step-text">${s}</div>
+    </div>`).join('');
+
+  // Nutrition
+  const hasNutrition = r.kcal || r.protein_g;
+  document.getElementById('modalNutrition').innerHTML = hasNutrition ? `
+    <div class="modal-section-title">Nutrition per serving</div>
+    <div class="nutrition-grid">
+      ${r.kcal       ? `<div class="nutrition-cell"><span class="nut-val">${r.kcal}</span><span class="nut-lbl">kcal</span></div>` : ''}
+      ${r.protein_g  ? `<div class="nutrition-cell"><span class="nut-val">${r.protein_g}g</span><span class="nut-lbl">protein</span></div>` : ''}
+    </div>` : '';
+
+  // Source
+  document.getElementById('modalSource').innerHTML = r.source_publication
+    ? `<div class="source-line">Source: ${r.source_publication}${r.source_date ? ', ' + r.source_date : ''}</div>`
+    : '';
+
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  // Screen Wake Lock — keep screen on while cooking
+  requestWakeLock();
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  releaseWakeLock();
+}
+
+function closeModalOnBg(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+// ── Wake Lock ──────────────────────────────────────────────────────────────────
+async function requestWakeLock() {
+  if ('wakeLock' in navigator) {
+    try {
+      wakeLock = await navigator.wakeLock.request('screen');
+    } catch (_) {}
+  }
+}
+
+function releaseWakeLock() {
+  if (wakeLock) { wakeLock.release(); wakeLock = null; }
+}
+
+// Re-acquire wake lock if page becomes visible again
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && document.getElementById('modalOverlay').classList.contains('open')) {
+    requestWakeLock();
+  }
+});
+
+// ── Surprise Me ────────────────────────────────────────────────────────────────
+function surpriseMe() {
+  if (!allRecipes.length) return;
+  const eligible = allRecipes.filter(r => !isAllergenFlagged(r));
+  const pool = eligible.length ? eligible : allRecipes;
+  const r = pool[Math.floor(Math.random() * pool.length)];
+  openRecipe(r);
+}
+
+// ── Service Worker ─────────────────────────────────────────────────────────────
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+
+// ── Boot ───────────────────────────────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>

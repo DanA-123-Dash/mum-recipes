@@ -1,0 +1,8 @@
+.env
+tools/inbox/*
+tools/processed/*
+!tools/inbox/.gitkeep
+!tools/processed/.gitkeep
+__pycache__/
+*.pyc
+.DS_Store

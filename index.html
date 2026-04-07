@@ -626,6 +626,313 @@
 
   .btn-cancel { background: rgba(44,36,22,0.08); color: var(--ink); }
   .btn-view   { background: var(--rust); color: white; }
+
+  /* ── PESCATARIAN PILL ────────────────────────────────────────────── */
+  .pesc-pill {
+    font-size: 12px;
+    color: var(--sage);
+    background: rgba(122,158,126,0.15);
+    border: 1px solid rgba(122,158,126,0.3);
+    border-radius: 20px;
+    padding: 4px 12px;
+    margin-top: 8px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    display: inline-block;
+  }
+
+  /* ── LIGHTBOX ────────────────────────────────────────────────────── */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.93);
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    cursor: zoom-out;
+  }
+  .lightbox.open { opacity: 1; pointer-events: all; }
+  .lightbox img { max-width: 100%; max-height: 92vh; object-fit: contain; border-radius: 4px; }
+
+  /* ── SUGGESTED SIDES ─────────────────────────────────────────────── */
+  .suggested-row {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(44,36,22,0.08);
+  }
+  .suggested-scroll {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+  .suggested-scroll::-webkit-scrollbar { display: none; }
+  .suggested-mini {
+    flex: 0 0 120px;
+    background: var(--cream);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.15s;
+  }
+  .suggested-mini:active { transform: scale(0.96); }
+  .suggested-mini img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; background: #e8ddd0; }
+  .suggested-mini-placeholder {
+    width: 100%;
+    aspect-ratio: 4/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    background: linear-gradient(135deg, #f0e8dc, #e8ddd0);
+  }
+  .suggested-mini-body { padding: 6px 8px 8px; }
+  .suggested-mini-title { font-family: 'Playfair Display', serif; font-size: 12px; line-height: 1.3; color: var(--ink); }
+
+  /* ── COLLECTIONS SECTION ─────────────────────────────────────────── */
+  .collections-section { padding: 0 16px 14px; }
+  .collections-scroll { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; padding-bottom: 4px; }
+  .collections-scroll::-webkit-scrollbar { display: none; }
+  .collection-card {
+    flex: 0 0 140px;
+    background: var(--warm-white);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.15s;
+  }
+  .collection-card:active { transform: scale(0.97); }
+  .collection-thumb-strip { display: flex; height: 70px; overflow: hidden; }
+  .collection-thumb-strip img { flex: 1; object-fit: cover; min-width: 0; }
+  .collection-thumb-placeholder {
+    flex: 1;
+    background: linear-gradient(135deg, #f0e8dc, #e8ddd0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  .collection-card-body { padding: 8px 10px 10px; }
+  .collection-emoji { font-size: 18px; }
+  .collection-name { font-family: 'Playfair Display', serif; font-size: 13px; line-height: 1.3; color: var(--ink); margin-top: 2px; }
+  .collection-count { font-size: 11px; color: var(--ink-light); margin-top: 2px; }
+  .new-collection-card {
+    flex: 0 0 90px;
+    background: rgba(44,36,22,0.04);
+    border: 2px dashed rgba(44,36,22,0.15);
+    border-radius: 14px;
+    height: 122px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    gap: 5px;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.2s;
+  }
+  .new-collection-card:active { background: rgba(44,36,22,0.08); }
+  .new-collection-card .nc-plus { font-size: 22px; color: var(--ink-light); }
+  .new-collection-card .nc-label { font-size: 12px; color: var(--ink-light); font-weight: 700; }
+
+  /* ── ADD TO COLLECTION BUTTON ────────────────────────────────────── */
+  .add-to-collection-btn {
+    display: block;
+    width: 100%;
+    margin-top: 16px;
+    padding: 13px;
+    background: rgba(44,36,22,0.06);
+    border: 1.5px solid rgba(44,36,22,0.12);
+    border-radius: 12px;
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    cursor: pointer;
+    text-align: center;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .add-to-collection-btn:active { background: rgba(44,36,22,0.1); }
+
+  /* ── COLLECTION BOTTOM SHEET ─────────────────────────────────────── */
+  .sheet-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(44,36,22,0.55);
+    z-index: 400;
+    display: flex;
+    align-items: flex-end;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .sheet-overlay.open { opacity: 1; pointer-events: all; }
+  .bottom-sheet {
+    background: var(--warm-white);
+    border-radius: 24px 24px 0 0;
+    width: 100%;
+    padding: 20px 20px 44px;
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.32,0.72,0,1);
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+  .sheet-overlay.open .bottom-sheet { transform: translateY(0); }
+  .sheet-handle { width: 40px; height: 4px; background: rgba(44,36,22,0.15); border-radius: 2px; margin: 0 auto 16px; }
+  .sheet-title { font-family: 'Playfair Display', serif; font-size: 18px; margin-bottom: 14px; }
+  .collection-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(44,36,22,0.06);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .collection-option:active { opacity: 0.7; }
+  .col-opt-emoji { font-size: 22px; }
+  .col-opt-name { font-size: 15px; font-weight: 700; color: var(--ink); }
+  .col-opt-count { font-size: 12px; color: var(--ink-light); }
+  .new-col-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 0;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    color: var(--rust);
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  /* ── COLLECTION DETAIL ───────────────────────────────────────────── */
+  .collection-detail {
+    position: fixed;
+    inset: 0;
+    background: var(--cream);
+    z-index: 350;
+    overflow-y: auto;
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.32,0.72,0,1);
+  }
+  .collection-detail.open { transform: translateY(0); }
+  .collection-detail-header {
+    background: var(--ink);
+    padding: 56px 20px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .collection-detail-back {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    border: none;
+    color: white;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .collection-detail-title { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--cream); }
+  .collection-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 14px; }
+  .remove-from-col {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.55);
+    border: none;
+    color: white;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 5;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* ── COOK LOG ────────────────────────────────────────────────────── */
+  .cook-log-section { margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(44,36,22,0.08); }
+  .cook-log-entries { margin-bottom: 14px; }
+  .log-entry { display: flex; gap: 10px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid rgba(44,36,22,0.06); }
+  .log-entry-stars { font-size: 15px; color: var(--amber); white-space: nowrap; }
+  .log-entry-body { flex: 1; }
+  .log-entry-meta { font-size: 11px; color: var(--ink-light); margin-bottom: 2px; }
+  .log-entry-note { font-size: 14px; color: var(--ink); }
+  .log-cook-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    background: var(--rust);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .log-cook-btn:active { opacity: 0.85; }
+  .log-form { margin-top: 12px; padding: 14px; background: rgba(44,36,22,0.04); border-radius: 12px; }
+  .star-picker { display: flex; gap: 2px; margin-bottom: 10px; }
+  .star-btn {
+    font-size: 26px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0 2px;
+    opacity: 0.25;
+    transition: opacity 0.15s, transform 0.1s;
+    -webkit-tap-highlight-color: transparent;
+    color: var(--amber);
+  }
+  .star-btn.selected { opacity: 1; }
+  .star-btn:active { transform: scale(1.2); }
+  .log-note-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid rgba(44,36,22,0.15);
+    border-radius: 8px;
+    background: white;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    resize: none;
+    margin-bottom: 10px;
+    outline: none;
+  }
+  .log-submit-btn {
+    padding: 10px 20px;
+    background: var(--ink);
+    color: var(--cream);
+    border: none;
+    border-radius: 10px;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
 </style>
 </head>
 <body>
@@ -639,7 +946,7 @@
       <span class="profile-emoji">👩‍🍳</span>
       <div class="profile-card-text">
         <strong>Mum</strong>
-        <span>All recipes</span>
+        <span>Veggie &amp; fish</span>
       </div>
     </div>
     <div class="profile-card" onclick="selectProfile('dan')">
@@ -675,6 +982,7 @@
     <span class="search-icon">🔍</span>
     <input type="text" placeholder="Search by name or ingredient…" id="searchInput" oninput="renderGrid()">
   </div>
+  <div id="pescPill" class="pesc-pill" style="display:none">🌿 Veggie + Fish</div>
 </header>
 
 <!-- ── FILTERS ─────────────────────────────────────────────────────────── -->
@@ -691,6 +999,9 @@
 
 <div class="section-label" id="sectionLabel"></div>
 <div class="recipe-grid" id="recipeGrid"></div>
+
+<!-- ── COLLECTIONS SECTION ──────────────────────────────────────────── -->
+<div id="collectionsSection" class="collections-section"></div>
 
 <!-- ── RECIPE MODAL ─────────────────────────────────────────────────────── -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModalOnBg(event)">
@@ -709,6 +1020,9 @@
         <div class="method-steps" id="modalMethod"></div>
         <div id="modalNutrition"></div>
         <div id="modalSource"></div>
+        <button class="add-to-collection-btn" onclick="showCollectionSheet()">＋ Add to Collection</button>
+        <div id="modalSuggested"></div>
+        <div id="modalCookLog"></div>
       </div>
     </div>
   </div>
@@ -727,18 +1041,53 @@
   </div>
 </div>
 
+<!-- ── LIGHTBOX ───────────────────────────────────────────────────────────── -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <img id="lightboxImg" src="" alt="Full size recipe image">
+</div>
+
+<!-- ── COLLECTION BOTTOM SHEET ──────────────────────────────────────────── -->
+<div class="sheet-overlay" id="sheetOverlay" onclick="closeCollectionSheetOnBg(event)">
+  <div class="bottom-sheet" id="sheetContent"></div>
+</div>
+
+<!-- ── COLLECTION DETAIL ────────────────────────────────────────────────── -->
+<div class="collection-detail" id="collectionDetail">
+  <div class="collection-detail-header">
+    <button class="collection-detail-back" onclick="closeCollectionDetail()">←</button>
+    <div class="collection-detail-title" id="collectionDetailTitle"></div>
+  </div>
+  <div class="collection-detail-grid" id="collectionDetailGrid"></div>
+</div>
+
 <script>
 // ── State ───────────────────────────────────────────────────────────────────
 let allRecipes = [];
 let activeFilter = 'All';
 let pendingRecipeId = null;
+let currentRecipe  = null;
+let selectedRating = 0;
 let wakeLock = null;
 
 const PROFILES = {
-  mum: { emoji: '👩‍🍳', name: 'Mum' },
+  mum: { emoji: '👩‍🍳', name: 'Mum', hideMeat: true },
   dan: { emoji: '👨‍💻', name: 'Dan' },
   cat: { emoji: '🐱',  name: 'Cat' },
 };
+
+const MEAT_KEYWORDS = [
+  'chicken','beef','pork','lamb','mince','bacon','turkey','duck','veal','venison',
+  'sausage','ham','steak','chorizo','salami','prosciutto','pancetta','bresaola',
+  'gammon','lardons','pepperoni','mortadella','rabbit',
+];
+
+function isMeatRecipe(recipe) {
+  const ings = recipe.ingredients || [];
+  return ings.some(i => {
+    const name = (i.ingredient || '').toLowerCase();
+    return MEAT_KEYWORDS.some(k => name.includes(k));
+  });
+}
 
 const CATEGORY_EMOJI = {
   mains: '🍗', bakes: '🍰', soups: '🥣', sides: '🥗',
@@ -812,6 +1161,7 @@ async function init() {
 
   buildFilters();
   renderGrid();
+  renderCollectionsSection();
 }
 
 // ── Filters ──────────────────────────────────────────────────────────────────
@@ -832,7 +1182,8 @@ function setFilter(cat, btn) {
 
 // ── Render grid ───────────────────────────────────────────────────────────────
 function renderGrid() {
-  const q = (document.getElementById('searchInput').value || '').toLowerCase();
+  const q       = (document.getElementById('searchInput').value || '').toLowerCase();
+  const profile = getProfile();
   let data = allRecipes;
 
   if (activeFilter !== 'All') {
@@ -845,6 +1196,15 @@ function renderGrid() {
       (r.ingredients || []).some(i => i.ingredient?.toLowerCase().includes(q))
     );
   }
+
+  // Mum's pescatarian filter — hide meat recipes
+  if (PROFILES[profile]?.hideMeat) {
+    data = data.filter(r => !isMeatRecipe(r));
+  }
+
+  // Show/hide pescatarian pill
+  const pill = document.getElementById('pescPill');
+  if (pill) pill.style.display = PROFILES[profile]?.hideMeat ? 'inline-block' : 'none';
 
   const label = activeFilter === 'All' ? `All Recipes (${data.length})` : `${activeFilter} (${data.length})`;
   document.getElementById('sectionLabel').textContent = label;
@@ -916,10 +1276,12 @@ function openAfterWarning() {
 
 // ── Recipe modal ───────────────────────────────────────────────────────────────
 function openRecipe(r) {
-  // Hero image
+  currentRecipe = r;
+
+  // Hero image (tap to open lightbox)
   const hero = document.getElementById('modalHero');
   if (r.image_url) {
-    hero.innerHTML = `<img class="modal-hero" src="${r.image_url}" alt="${r.title}" onerror="this.parentElement.innerHTML='<div class=modal-hero-placeholder>${CATEGORY_EMOJI[r.category]||'🍽'}</div>'">`;
+    hero.innerHTML = `<img class="modal-hero" src="${r.image_url}" alt="${r.title}" onclick="openLightbox(this.src)" style="cursor:zoom-in" onerror="this.parentElement.innerHTML='<div class=modal-hero-placeholder>${CATEGORY_EMOJI[r.category]||'🍽'}</div>'">`;
   } else {
     hero.innerHTML = `<div class="modal-hero-placeholder">${CATEGORY_EMOJI[r.category] || '🍽'}</div>`;
   }
@@ -987,6 +1349,12 @@ function openRecipe(r) {
     ? `<div class="source-line">Source: ${r.source_publication}${r.source_date ? ', ' + r.source_date : ''}</div>`
     : '';
 
+  // Suggested sides
+  document.getElementById('modalSuggested').innerHTML = renderSuggestions(r);
+
+  // Cook log
+  document.getElementById('modalCookLog').innerHTML = renderCookLog(r);
+
   document.getElementById('modalOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 
@@ -1031,6 +1399,275 @@ function surpriseMe() {
   const pool = eligible.length ? eligible : allRecipes;
   const r = pool[Math.floor(Math.random() * pool.length)];
   openRecipe(r);
+}
+
+// ── Lightbox ───────────────────────────────────────────────────────────────────
+function openLightbox(src) {
+  document.getElementById('lightboxImg').src = src;
+  document.getElementById('lightbox').classList.add('open');
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeLightbox();
+    closeCollectionSheet();
+  }
+});
+
+// ── Suggested sides ────────────────────────────────────────────────────────────
+const COMPLEMENTARY_CATS = {
+  mains:     ['sides', 'soups', 'desserts'],
+  main:      ['sides', 'soups', 'desserts'],
+  sides:     ['mains'],
+  side:      ['mains'],
+  desserts:  ['bakes'],
+  dessert:   ['bakes'],
+};
+
+function getSuggestions(recipe) {
+  const cat     = (recipe.category || '').toLowerCase();
+  const cuisine = (recipe.cuisine_primary || '').toLowerCase();
+  const targets = COMPLEMENTARY_CATS[cat] || [];
+  if (!targets.length) return [];
+
+  // Priority 1: same cuisine + complementary category
+  let pool = allRecipes.filter(r =>
+    r.id !== recipe.id &&
+    targets.includes((r.category || '').toLowerCase()) &&
+    cuisine && (r.cuisine_primary || '').toLowerCase() === cuisine
+  );
+
+  // Fallback: complementary category any cuisine
+  if (pool.length < 3) {
+    const extra = allRecipes.filter(r =>
+      r.id !== recipe.id &&
+      !pool.find(s => s.id === r.id) &&
+      targets.includes((r.category || '').toLowerCase())
+    );
+    pool = [...pool, ...extra];
+  }
+
+  return pool.slice(0, 3);
+}
+
+function renderSuggestions(recipe) {
+  const list = getSuggestions(recipe);
+  if (!list.length) return '';
+  const cards = list.map(r => {
+    const img = r.image_url
+      ? `<img src="${r.image_url}" alt="${r.title}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="suggested-mini-placeholder" style="display:none">${CATEGORY_EMOJI[r.category]||'🍽'}</div>`
+      : `<div class="suggested-mini-placeholder">${CATEGORY_EMOJI[r.category]||'🍽'}</div>`;
+    return `<div class="suggested-mini" onclick="closeModal();setTimeout(()=>handleCardClick('${r.id}'),200)">${img}<div class="suggested-mini-body"><div class="suggested-mini-title">${r.title}</div></div></div>`;
+  }).join('');
+  return `<div class="suggested-row"><div class="modal-section-title" style="margin-top:0">Goes well with</div><div class="suggested-scroll">${cards}</div></div>`;
+}
+
+// ── Cook Log ───────────────────────────────────────────────────────────────────
+function getCookLog() {
+  try { return JSON.parse(localStorage.getItem('cook_log') || '[]'); } catch { return []; }
+}
+
+function saveCookLog(log) {
+  localStorage.setItem('cook_log', JSON.stringify(log));
+}
+
+function starsHtml(rating) {
+  return '★'.repeat(rating) + '☆'.repeat(5 - rating);
+}
+
+function renderCookLog(recipe) {
+  const entries = getCookLog().filter(e => e.recipeId === recipe.id);
+  const rows = entries.map(e => `
+    <div class="log-entry">
+      <div class="log-entry-stars">${starsHtml(e.rating)}</div>
+      <div class="log-entry-body">
+        <div class="log-entry-meta">${PROFILES[e.profile]?.emoji || ''} ${PROFILES[e.profile]?.name || e.profile} · ${e.date}</div>
+        ${e.note ? `<div class="log-entry-note">${e.note}</div>` : ''}
+      </div>
+    </div>`).join('');
+  return `
+    <div class="cook-log-section">
+      <div class="modal-section-title" style="margin-top:0">Cook Log</div>
+      ${rows ? `<div class="cook-log-entries">${rows}</div>` : '<p style="font-size:13px;color:var(--ink-light);margin-bottom:12px">No cooks logged yet.</p>'}
+      <button class="log-cook-btn" onclick="showLogForm()">+ Log a cook</button>
+      <div id="logForm" style="display:none">
+        <div class="log-form">
+          <div class="star-picker" id="starPicker">
+            ${[1,2,3,4,5].map(n => `<button class="star-btn" data-star="${n}" onclick="setStars(${n})">★</button>`).join('')}
+          </div>
+          <textarea class="log-note-input" id="logNote" rows="2" placeholder="Add a note (optional)…"></textarea>
+          <button class="log-submit-btn" onclick="submitLog('${recipe.id}')">Save</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function showLogForm() {
+  const form = document.getElementById('logForm');
+  if (!form) return;
+  form.style.display = form.style.display === 'block' ? 'none' : 'block';
+  selectedRating = 0;
+  updateStarPicker();
+}
+
+function setStars(n) {
+  selectedRating = n;
+  updateStarPicker();
+}
+
+function updateStarPicker() {
+  const picker = document.getElementById('starPicker');
+  if (!picker) return;
+  picker.querySelectorAll('.star-btn').forEach(btn => {
+    btn.classList.toggle('selected', parseInt(btn.dataset.star) <= selectedRating);
+  });
+}
+
+function submitLog(recipeId) {
+  if (!selectedRating) { alert('Please select a star rating first.'); return; }
+  const note = (document.getElementById('logNote')?.value || '').trim();
+  const log = getCookLog();
+  log.push({ recipeId, profile: getProfile(), rating: selectedRating, note, date: new Date().toISOString().slice(0,10) });
+  saveCookLog(log);
+  // Re-render cook log (currentRecipe must still be set)
+  if (currentRecipe) {
+    document.getElementById('modalCookLog').innerHTML = renderCookLog(currentRecipe);
+  }
+}
+
+// ── Collections ────────────────────────────────────────────────────────────────
+function getCollections() {
+  try { return JSON.parse(localStorage.getItem('recipe_collections') || '[]'); } catch { return []; }
+}
+
+function saveCollections(cols) {
+  localStorage.setItem('recipe_collections', JSON.stringify(cols));
+}
+
+function renderCollectionsSection() {
+  const el   = document.getElementById('collectionsSection');
+  if (!el) return;
+  const cols = getCollections();
+  const newCard = `<div class="new-collection-card" onclick="promptNewCollection()"><span class="nc-plus">＋</span><span class="nc-label">New</span></div>`;
+
+  if (!cols.length) {
+    el.innerHTML = `<div class="section-label">My Collections</div><div class="collections-scroll">${newCard}</div>`;
+    return;
+  }
+
+  const cards = cols.map(col => {
+    const recipes = col.recipeIds.map(id => allRecipes.find(r => r.id === id)).filter(Boolean);
+    const thumbs  = recipes.slice(0, 3).map(r =>
+      r?.image_url
+        ? `<img src="${r.image_url}" alt="" onerror="this.style.display='none'">`
+        : `<div class="collection-thumb-placeholder">${CATEGORY_EMOJI[r?.category]||'🍽'}</div>`
+    ).join('') || `<div class="collection-thumb-placeholder" style="flex:1">📋</div>`;
+    return `
+      <div class="collection-card" onclick="openCollectionDetail('${col.id}')">
+        <div class="collection-thumb-strip">${thumbs}</div>
+        <div class="collection-card-body">
+          <div class="collection-emoji">${col.emoji}</div>
+          <div class="collection-name">${col.name}</div>
+          <div class="collection-count">${recipes.length} recipe${recipes.length !== 1 ? 's' : ''}</div>
+        </div>
+      </div>`;
+  }).join('');
+
+  el.innerHTML = `<div class="section-label">My Collections</div><div class="collections-scroll">${newCard}${cards}</div>`;
+}
+
+function promptNewCollection() {
+  const name = window.prompt('Collection name (e.g. Thai Dinner):');
+  if (!name?.trim()) return;
+  const emojis = ['🍜','🍕','🍣','🥘','🥗','🍲','🍛','🥩','🌮','🎉'];
+  const picked = window.prompt(`Pick an emoji for "${name}":\n${emojis.join('  ')}`, '🍽');
+  const emoji  = picked?.trim() || '🍽';
+  const col    = { id: Date.now().toString(36), name: name.trim(), emoji, recipeIds: [], createdBy: getProfile(), createdAt: new Date().toISOString().slice(0,10) };
+  const cols   = getCollections();
+  cols.push(col);
+  saveCollections(cols);
+  renderCollectionsSection();
+}
+
+function showCollectionSheet() {
+  const cols = getCollections();
+  const rows = cols.map(col => `
+    <div class="collection-option" onclick="addRecipeToCollection('${col.id}')">
+      <span class="col-opt-emoji">${col.emoji}</span>
+      <div>
+        <div class="col-opt-name">${col.name}</div>
+        <div class="col-opt-count">${col.recipeIds.length} recipe${col.recipeIds.length !== 1 ? 's' : ''}</div>
+      </div>
+    </div>`).join('');
+  document.getElementById('sheetContent').innerHTML = `
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">Add to Collection</div>
+    ${rows || '<p style="font-size:14px;color:var(--ink-light);margin-bottom:14px">No collections yet.</p>'}
+    <div class="new-col-option" onclick="closeCollectionSheet();promptNewCollection()">＋ New collection</div>`;
+  document.getElementById('sheetOverlay').classList.add('open');
+}
+
+function closeCollectionSheet() {
+  document.getElementById('sheetOverlay').classList.remove('open');
+}
+
+function closeCollectionSheetOnBg(e) {
+  if (e.target === document.getElementById('sheetOverlay')) closeCollectionSheet();
+}
+
+function addRecipeToCollection(colId) {
+  if (!currentRecipe) return;
+  const cols = getCollections();
+  const col  = cols.find(c => c.id === colId);
+  if (col && !col.recipeIds.includes(currentRecipe.id)) {
+    col.recipeIds.push(currentRecipe.id);
+    saveCollections(cols);
+  }
+  closeCollectionSheet();
+  renderCollectionsSection();
+}
+
+function openCollectionDetail(colId) {
+  const cols    = getCollections();
+  const col     = cols.find(c => c.id === colId);
+  if (!col) return;
+  const recipes = col.recipeIds.map(id => allRecipes.find(r => r.id === id)).filter(Boolean);
+  document.getElementById('collectionDetailTitle').textContent = `${col.emoji} ${col.name}`;
+  document.getElementById('collectionDetailGrid').innerHTML = recipes.map(r => {
+    const img = r.image_url
+      ? `<img class="card-img" src="${r.image_url}" alt="${r.title}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="card-img-placeholder" style="display:none">${CATEGORY_EMOJI[r.category]||'🍽'}</div>`
+      : `<div class="card-img-placeholder">${CATEGORY_EMOJI[r.category]||'🍽'}</div>`;
+    return `
+      <div class="recipe-card" onclick="handleCardClick('${r.id}')">
+        <button class="remove-from-col" onclick="event.stopPropagation();removeFromCollection('${colId}','${r.id}')">✕</button>
+        ${img}
+        <div class="card-body">
+          <div class="card-category">${r.category||''}</div>
+          <div class="card-title">${r.title}</div>
+        </div>
+      </div>`;
+  }).join('') || '<p style="padding:16px;color:var(--ink-light);font-size:14px">No recipes in this collection yet.</p>';
+  document.getElementById('collectionDetail').dataset.colId = colId;
+  document.getElementById('collectionDetail').classList.add('open');
+}
+
+function closeCollectionDetail() {
+  document.getElementById('collectionDetail').classList.remove('open');
+}
+
+function removeFromCollection(colId, recipeId) {
+  const cols = getCollections();
+  const col  = cols.find(c => c.id === colId);
+  if (col) {
+    col.recipeIds = col.recipeIds.filter(id => id !== recipeId);
+    saveCollections(cols);
+    openCollectionDetail(colId);
+    renderCollectionsSection();
+  }
 }
 
 // ── Service Worker ─────────────────────────────────────────────────────────────

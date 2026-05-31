@@ -4,7 +4,7 @@
 //   data.json → network-first with cache fallback
 //   Drive images → cache-first (images don't change once uploaded)
 
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v2';
 const SHELL_CACHE   = `shell-${CACHE_VERSION}`;
 const DATA_CACHE    = `data-${CACHE_VERSION}`;
 const IMAGE_CACHE   = `images-${CACHE_VERSION}`;

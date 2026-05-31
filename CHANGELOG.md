@@ -4,9 +4,30 @@ All notable changes will be documented here.
 
 ---
 
-## [2026-05-31]
+## [2026-05-31] — Shared cook log Worker (Phase 4 closeout)
 
-### Added — Phase 2b / 3 / 4 completion sprint
+### Added
+- `worker/` subfolder containing a Cloudflare Worker (`mum-recipes-api`) backed by D1, exposing `GET /log?recipeId=…`, `POST /log`, and `DELETE /log/:clientId`. Includes deployment-step README, migration SQL, package.json, wrangler.toml scaffolding (D1 + KV bindings + `ALLOWED_ORIGINS` env var), and CORS / shared-bearer-token / per-IP-rate-limit handling.
+- PWA cook-log integration in `index.html`: `WORKER_URL` / `FAMILY_TOKEN` constants near the top of the script block, `fetchCookLogForRecipe()` to refresh from server on modal-open, `flushPendingCookLogs()` for offline-queued submits, `backfillLegacyCookLog()` one-shot migration of pre-Worker localStorage entries, and an `online`-event retry hook.
+- Optimistic UI on submit: entry appears immediately with a `syncing…` chip and amber styling (`.log-entry-pending`); chip clears when the server acknowledges.
+- Cook Log title gains a `· this device only` chip when `WORKER_URL`/`FAMILY_TOKEN` are unset, so it's obvious the PWA is in local-only fallback mode.
+
+### Changed
+- `submitLog()` is now async, generates a `crypto.randomUUID()` `clientId`, writes optimistically to localStorage, then POSTs to the Worker (when enabled).
+- `renderCookLog()` sorts pending-sync entries to the top and adds the new pending styling.
+- `openRecipe()` calls `fetchCookLogForRecipe()` in the background after rendering from cache.
+- `init()` runs `backfillLegacyCookLog()` + `flushPendingCookLogs()` at boot.
+- Service worker `CACHE_VERSION` bumped `v2` → `v3` so existing iPad installs pick up the new shell.
+
+### Notes
+- `WORKER_URL` and `FAMILY_TOKEN` ship empty: the PWA stays in localStorage-only mode until the Worker is deployed (see `worker/README.md`) and both constants are filled in.
+- See new `ARCHITECTURE.md` section "Cook log: Cloudflare Worker + D1" for the design rationale (idempotency, cache reconciliation, pragmatic auth).
+
+---
+
+## [2026-05-31] — Phase 2b / 3 / 4 completion sprint
+
+### Added
 - **Cook mode** — toggle on the recipe modal that bumps font sizes and enables tap-to-strike-through on ingredients and method steps. Wake-lock is re-requested on entry.
 - **Serves multiplier** — ± controls inline in the meta row; ingredient quantities rescale via existing `FRACTIONS` formatter. Re-renders meta + ingredients without re-opening the modal.
 - **Air-fryer toggle** — pill next to the Method heading that swaps the steps list to `method_air_fryer_json` when populated. Auto-hides when the field is empty so the UI lights up as data arrives.

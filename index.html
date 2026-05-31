@@ -1183,6 +1183,14 @@
   }
   .basket-btns button:active { transform: scale(0.97); }
 
+  /* ── COOK LOG PENDING-SYNC STATE ──────────────────────────────────── */
+  .log-entry-pending {
+    opacity: 0.65;
+  }
+  .log-entry-pending .log-entry-meta {
+    color: var(--amber);
+  }
+
   /* ── TOAST ─────────────────────────────────────────────────────────── */
   .toast {
     position: fixed;
@@ -1477,6 +1485,9 @@ async function init() {
   renderGrid();
   renderCollectionsSection();
   updateBasketFab();
+  // Cook-log housekeeping — flush retries and one-shot legacy backfill.
+  backfillLegacyCookLog();
+  flushPendingCookLogs();
 }
 
 // ── Filters ──────────────────────────────────────────────────────────────────
@@ -1715,8 +1726,9 @@ function openRecipe(r) {
   // Suggested sides
   document.getElementById('modalSuggested').innerHTML = renderSuggestions(r);
 
-  // Cook log
+  // Cook log — render from local cache immediately, then refresh from Worker.
   document.getElementById('modalCookLog').innerHTML = renderCookLog(r);
+  fetchCookLogForRecipe(r);
 
   document.getElementById('modalOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -2037,6 +2049,12 @@ function renderSuggestions(recipe) {
 }
 
 // ── Cook Log ───────────────────────────────────────────────────────────────────
+// Worker config — populated after `wrangler deploy`. Leave blank for
+// localStorage-only mode (per-device cook logs, no cross-device sync).
+const WORKER_URL    = '';   // e.g. 'https://mum-recipes-api.<handle>.workers.dev'
+const FAMILY_TOKEN  = '';   // matches `wrangler secret put FAMILY_TOKEN`
+const WORKER_ENABLED = () => !!(WORKER_URL && FAMILY_TOKEN);
+
 function getCookLog() {
   try { return JSON.parse(localStorage.getItem('cook_log') || '[]'); } catch { return []; }
 }
@@ -2045,23 +2063,87 @@ function saveCookLog(log) {
   localStorage.setItem('cook_log', JSON.stringify(log));
 }
 
+function newClientId() {
+  if (crypto && typeof crypto.randomUUID === 'function') return crypto.randomUUID();
+  // Fallback: time-based pseudo-UUID
+  return 't' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+}
+
+function normaliseServerEntry(row) {
+  // Server returns snake_case (recipe_id / cooked_date / client_id); normalise to
+  // the camelCase shape used everywhere in the PWA.
+  return {
+    recipeId:  row.recipe_id,
+    profile:   row.profile,
+    rating:    row.rating,
+    note:      row.note || '',
+    date:      row.cooked_date,
+    clientId:  row.client_id,
+    syncedAt:  row.created_at,
+    pendingSync: false,
+  };
+}
+
+async function workerFetch(path, opts = {}) {
+  if (!WORKER_ENABLED()) throw new Error('worker_disabled');
+  const res = await fetch(`${WORKER_URL}${path}`, {
+    ...opts,
+    headers: {
+      'Authorization': `Bearer ${FAMILY_TOKEN}`,
+      ...(opts.body ? { 'Content-Type': 'application/json' } : {}),
+      ...(opts.headers || {}),
+    },
+  });
+  if (!res.ok) throw new Error(`worker_http_${res.status}`);
+  if (res.status === 204) return null;
+  return res.json();
+}
+
+async function fetchCookLogForRecipe(recipe) {
+  if (!WORKER_ENABLED()) return;
+  let serverEntries;
+  try {
+    const rows = await workerFetch(`/log?recipeId=${encodeURIComponent(recipe.id)}`);
+    serverEntries = rows.map(normaliseServerEntry);
+  } catch (_) {
+    return; // network/auth failure — keep local cache
+  }
+  // Merge: server is source of truth for this recipe; preserve any local
+  // pendingSync entries for the same recipe (they haven't been ack'd yet).
+  const local = getCookLog();
+  const pendingForThisRecipe = local.filter(e => e.recipeId === recipe.id && e.pendingSync);
+  const others = local.filter(e => e.recipeId !== recipe.id);
+  saveCookLog([...others, ...serverEntries, ...pendingForThisRecipe]);
+  if (currentRecipe && currentRecipe.id === recipe.id) {
+    document.getElementById('modalCookLog').innerHTML = renderCookLog(recipe);
+  }
+}
+
 function starsHtml(rating) {
   return '★'.repeat(rating) + '☆'.repeat(5 - rating);
 }
 
 function renderCookLog(recipe) {
-  const entries = getCookLog().filter(e => e.recipeId === recipe.id);
+  // Sort newest-first by date desc, then pendingSync at the top so optimistic
+  // entries appear immediately on submit.
+  const entries = getCookLog()
+    .filter(e => e.recipeId === recipe.id)
+    .sort((a, b) => {
+      if (a.pendingSync && !b.pendingSync) return -1;
+      if (!a.pendingSync && b.pendingSync) return 1;
+      return (b.date || '').localeCompare(a.date || '');
+    });
   const rows = entries.map(e => `
-    <div class="log-entry">
+    <div class="log-entry${e.pendingSync ? ' log-entry-pending' : ''}">
       <div class="log-entry-stars">${starsHtml(e.rating)}</div>
       <div class="log-entry-body">
-        <div class="log-entry-meta">${PROFILES[e.profile]?.emoji || ''} ${PROFILES[e.profile]?.name || e.profile} · ${e.date}</div>
+        <div class="log-entry-meta">${PROFILES[e.profile]?.emoji || ''} ${PROFILES[e.profile]?.name || e.profile} · ${e.date}${e.pendingSync ? ' · syncing…' : ''}</div>
         ${e.note ? `<div class="log-entry-note">${e.note}</div>` : ''}
       </div>
     </div>`).join('');
   return `
     <div class="cook-log-section">
-      <div class="modal-section-title" style="margin-top:0">Cook Log</div>
+      <div class="modal-section-title" style="margin-top:0">Cook Log${WORKER_ENABLED() ? '' : ' <span style="font-size:11px;color:var(--ink-light);font-weight:400">· this device only</span>'}</div>
       ${rows ? `<div class="cook-log-entries">${rows}</div>` : '<p style="font-size:13px;color:var(--ink-light);margin-bottom:12px">No cooks logged yet.</p>'}
       <button class="log-cook-btn" onclick="showLogForm()">+ Log a cook</button>
       <div id="logForm" style="display:none">
@@ -2097,17 +2179,105 @@ function updateStarPicker() {
   });
 }
 
-function submitLog(recipeId) {
+async function submitLog(recipeId) {
   if (!selectedRating) { alert('Please select a star rating first.'); return; }
   const note = (document.getElementById('logNote')?.value || '').trim();
+  const entry = {
+    recipeId,
+    profile: getProfile() || 'unknown',
+    rating: selectedRating,
+    note,
+    date: new Date().toISOString().slice(0,10),
+    clientId: newClientId(),
+    pendingSync: WORKER_ENABLED(), // local-only mode never pends
+  };
+  // Optimistic local write + render
   const log = getCookLog();
-  log.push({ recipeId, profile: getProfile(), rating: selectedRating, note, date: new Date().toISOString().slice(0,10) });
+  log.push(entry);
   saveCookLog(log);
-  // Re-render cook log (currentRecipe must still be set)
-  if (currentRecipe) {
+  if (currentRecipe && currentRecipe.id === recipeId) {
+    document.getElementById('modalCookLog').innerHTML = renderCookLog(currentRecipe);
+  }
+  // Hide the form
+  const form = document.getElementById('logForm');
+  if (form) form.style.display = 'none';
+  selectedRating = 0;
+
+  if (!WORKER_ENABLED()) return;
+  // Async POST; on success replace pendingSync flag with server entry.
+  try {
+    const row = await workerFetch('/log', {
+      method: 'POST',
+      body: JSON.stringify({
+        recipeId:   entry.recipeId,
+        profile:    entry.profile,
+        rating:     entry.rating,
+        note:       entry.note,
+        cookedDate: entry.date,
+        clientId:   entry.clientId,
+      }),
+    });
+    const synced = normaliseServerEntry(row);
+    const fresh = getCookLog().map(e => e.clientId === entry.clientId ? synced : e);
+    saveCookLog(fresh);
+    if (currentRecipe && currentRecipe.id === recipeId) {
+      document.getElementById('modalCookLog').innerHTML = renderCookLog(currentRecipe);
+    }
+  } catch (_) {
+    // Leave pendingSync flag — boot replay or next openRecipe will retry.
+    showToast('Saved locally — will sync when online');
+  }
+}
+
+async function flushPendingCookLogs() {
+  if (!WORKER_ENABLED()) return;
+  const log = getCookLog();
+  const pending = log.filter(e => e.pendingSync && e.clientId);
+  if (!pending.length) return;
+  let progressed = false;
+  for (const entry of pending) {
+    try {
+      const row = await workerFetch('/log', {
+        method: 'POST',
+        body: JSON.stringify({
+          recipeId:   entry.recipeId,
+          profile:    entry.profile,
+          rating:     entry.rating,
+          note:       entry.note,
+          cookedDate: entry.date,
+          clientId:   entry.clientId,
+        }),
+      });
+      const synced = normaliseServerEntry(row);
+      const fresh = getCookLog().map(e => e.clientId === entry.clientId ? synced : e);
+      saveCookLog(fresh);
+      progressed = true;
+    } catch (_) {
+      // Network still down; stop trying for now.
+      break;
+    }
+  }
+  if (progressed && currentRecipe) {
     document.getElementById('modalCookLog').innerHTML = renderCookLog(currentRecipe);
   }
 }
+
+async function backfillLegacyCookLog() {
+  // One-shot: legacy entries (pre-Worker) have no clientId. Stamp them and POST.
+  if (!WORKER_ENABLED()) return;
+  if (localStorage.getItem('cook_log_backfilled') === '1') return;
+  const log = getCookLog();
+  let mutated = false;
+  for (const e of log) {
+    if (!e.clientId) { e.clientId = newClientId(); e.pendingSync = true; mutated = true; }
+  }
+  if (mutated) saveCookLog(log);
+  await flushPendingCookLogs();
+  localStorage.setItem('cook_log_backfilled', '1');
+}
+
+// Retry pending submits when the browser comes back online.
+window.addEventListener('online', flushPendingCookLogs);
 
 // ── Collections ────────────────────────────────────────────────────────────────
 function getCollections() {

@@ -1,0 +1,22 @@
+name = "mum-recipes-api"
+main = "src/index.js"
+compatibility_date = "2026-05-01"
+
+# CORS allowlist — additional origins can be appended without code change.
+# The Worker reads this as a comma-separated string.
+[vars]
+ALLOWED_ORIGINS = "https://dana-123-dash.github.io,http://localhost:8765,http://127.0.0.1:8765"
+
+# Bindings — placeholders. Replace database_id and id after running:
+#   wrangler d1 create mum_recipes_cook_log
+#   wrangler kv namespace create RATE_LIMITER
+[[d1_databases]]
+binding = "COOK_LOG_DB"
+database_name = "mum_recipes_cook_log"
+database_id = "REPLACE_AFTER_wrangler_d1_create"
+
+[[kv_namespaces]]
+binding = "RATE_LIMITER"
+id = "REPLACE_AFTER_wrangler_kv_namespace_create"
+
+# FAMILY_TOKEN is set via `wrangler secret put FAMILY_TOKEN`, NOT here.

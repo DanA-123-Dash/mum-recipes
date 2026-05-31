@@ -4,6 +4,22 @@ Technical decisions, patterns, and quirks discovered during implementation.
 
 ---
 
+## Cook log: Cloudflare Worker + D1
+
+Multi-device cook-log visibility (mum's iPad ↔ Dan's Mac) is implemented as a small Worker in `worker/` backed by a Cloudflare D1 SQLite database. The PWA at build-time has a `WORKER_URL` and `FAMILY_TOKEN` constant near the top of the `<script>` block; if both are empty the cook log silently falls back to localStorage-only mode (per-device, no sync) and shows a `· this device only` chip on the Cook Log title.
+
+**Why D1 not KV:** D1 is queryable (e.g. "all of mum's 5★ recipes") with negligible overhead at this dataset size; KV would have forced us to design key schemes around each query.
+
+**Idempotency via `client_id`:** the PWA generates a UUID per submit (`crypto.randomUUID()`), keeps the entry in localStorage with `pendingSync: true`, and POSTs. The Worker's D1 table has `client_id TEXT NOT NULL UNIQUE`; a retry with the same `client_id` returns 200 (not 201) and the existing row. This makes offline submit + later replay safe with no dedup logic on the client.
+
+**Cache reconciliation:** `fetchCookLogForRecipe(recipe)` pulls the server truth at `openRecipe` time, merges it into the local `cook_log` array (server entries replace the cached set for that recipe; any `pendingSync` entries are preserved), and re-renders. Network failures leave the local cache untouched so the modal still renders something.
+
+**Pragmatic auth:** a shared `FAMILY_TOKEN` set via `wrangler secret put` and hardcoded in `index.html`. Visible to anyone viewing source — that's fine because the blast radius is "spam cook log entries", and the real defences are (a) CORS allowlist on `ALLOWED_ORIGINS` (only the published GitHub Pages origin gets `Access-Control-Allow-Origin`), (b) per-IP rate limiting via a KV counter at 60 req/min, (c) Cloudflare's edge-level DDoS protection. No real auth, no per-profile scoping — at family scale, "anyone can delete anything" is the right model.
+
+**Boot replay & legacy backfill:** on every `init()`, `flushPendingCookLogs()` retries any entries left `pendingSync: true`, and `backfillLegacyCookLog()` stamps pre-Worker entries (no `clientId`) and POSTs them once. A `cook_log_backfilled` localStorage flag prevents the backfill running twice.
+
+---
+
 ## Auth Split: Service Account (Sheets) vs OAuth (Drive)
 
 Service accounts cannot own files on personal Google Drive — they have no storage quota,

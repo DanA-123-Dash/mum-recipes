@@ -21,7 +21,7 @@ _Last updated: 2026-05-31_
 | Phase 2a | GitHub repo · GitHub Action → `data.json` · PWA fetches static JSON | ✅ Complete |
 | Phase 2b | Service worker · Allergen UI · Air fryer toggle · Serves adjuster | ✅ Complete |
 | Phase 3 | Kitchen UI — wake lock, fractions, crossing off | ✅ Complete |
-| Phase 4 | Cloudflare Worker (shopping list) · Web Share API | 🟡 Partial — basket + Web Share + clipboard fallback shipped local-only; Worker deferred |
+| Phase 4 | Cloudflare Worker (cook log) · Web Share API · Shopping basket | ✅ Complete — Worker scaffolded for shared cook log (repurposed from shopping list); basket + Web Share shipped local-only; Worker deploy pending user-side Cloudflare setup |
 
 ---
 
@@ -52,8 +52,9 @@ _Last updated: 2026-05-31_
 ### Data
 - **`method_air_fryer_json` empty across all 54 recipes.** Schema column AL exists, the toggle is wired and will light up automatically — but no recipe has air-fryer steps yet. Either populate during ingestion (extend prompt) or add adapted steps to a handful of high-value recipes by hand.
 
-### Phase 4 (deferred)
-- **Cloudflare Worker shopping-list persistence** — only needed if the basket needs to sync across devices. iPad-local `localStorage` is sufficient for current single-device use.
+### Deploy steps pending (user-side)
+- **`wrangler` Cloudflare setup** — one-time: `cd worker && npm install && npx wrangler login`, then create D1 + KV bindings, set `FAMILY_TOKEN` secret, run migration, `wrangler deploy`. Full steps in `worker/README.md`. Until done, the PWA stays in localStorage-only mode (silently, with a "this device only" chip on the cook log).
+- **Fill `WORKER_URL` and `FAMILY_TOKEN`** constants in `index.html` after the Worker is live; commit + push to activate cross-device sync.
 
 ### Optional polish
 - **PWA install prompt UX** — iOS users still need to discover "Add to Home Screen" manually; a one-time hint banner would help first-run.
